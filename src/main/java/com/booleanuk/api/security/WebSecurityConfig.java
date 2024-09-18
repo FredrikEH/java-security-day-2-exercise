@@ -55,8 +55,10 @@ public class WebSecurityConfig {
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/books", "/boardGames", "/cds", "/dvds" , "/videoGames").hasAnyAuthority("ROLE_USER")
-                        .requestMatchers("/books", "/books/**", "/boardGames/**", "/cds/**", "/dvds/**", "/videoGames/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MODERATOR")
+                        .requestMatchers(HttpMethod.GET,"/books", "/boardGames", "/cds", "/dvds" , "/videoGames", "/loans").hasAnyAuthority("ROLE_USER")
+                        .requestMatchers(HttpMethod.POST, "/users/{userId}/boardGames/{boardGameId}", "/users/{userId}/books/{bookId}", "/users/{userId}/cd/{cdID}" ,"/users/{userId}/dvd/{dvdId}" ,"/users/{userId}/videoGames/{videoGameId}").hasAnyAuthority("ROLE_USER")
+                        .requestMatchers(HttpMethod.PUT, "/users/{userId}/boardGames/{boardGameId}", "/users/{userId}/books/{bookId}", "/users/{userId}/cd/{cdID}" ,"/users/{userId}/dvd/{dvdId}" ,"/users/{userId}/videoGames/{videoGameId}").hasAnyAuthority("ROLE_USER")
+                        .requestMatchers("/books", "/books/**", "/boardGames/**", "/cds/**", "/dvds/**", "/videoGames/**", "/loans/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MODERATOR")
                         .anyRequest().authenticated()
                 );
         http.authenticationProvider(authenticationProvider());
